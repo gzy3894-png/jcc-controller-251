@@ -1,36 +1,23 @@
-﻿# JCC Controller 2.5.1
+﻿# JCC Controller 2.5.x
 
-你给的 **原版约 39MB JCC Controller（2.5.0）** 的「当前赛季数据」更新包。
-
-## 这才是你要的东西
-
-| | 之前推的 jcc-shell 2MB | **这个** |
-|--|----------------------|---------|
-| 是什么 | 另做的小壳 | **原 2.5.0 那个大 App** |
-| 界面/图标 | 没有原版浮层 | **原版 UI 全保留** |
-| 体积 | ~2MB | **~38MB** |
-| 改了什么 | 全新小工程 | **只换了失效的 libJCC.so** |
+原版约 39MB Controller + 新赛季内核。
 
 ## 下载
 
-见 [Releases](https://github.com/gzy3894-png/jcc-controller-251/releases) 里的  
-JCC-Controller-2.5.1.apk
+- [v2.5.2 完整内核](https://github.com/gzy3894-png/jcc-controller-251/releases/tag/v2.5.2)
 
-## 安装
+## 签名（固定）
 
-1. 卸载旧版 Controller（如有）
-2. 安装本 APK（debug 签名，允许未知来源）
-3. Root 后按原来 2.5.0 的方式启动注入
-4. 进大厅看牌库
+从 **2.5.2 起** 统一使用：
 
-## 功能进度（实话）
+`signing/jcc-controller.release.keystore`
 
-- **已更新：** 读英雄表/牌库列表（新赛季字段）
-- **界面还在但数据可能不全：** 对局叠层、剩余张数等原 SO 高级能力，新核心库还在补
-- 目标：继续把原 2.5.0 功能按新数据接回去
+- 后续 2.5.3+ **可直接覆盖安装，不必卸载**
+- 从**原版 2.5.0** 升级仍需先卸载（原作者签名不同）
 
-## 技术说明
+打包：`.\pack-controller.ps1 -SoPath libJCC.so -OutName JCC-Controller-2.5.3.apk`
 
-- 底包：你提供的 JCC Controller.apk
-- 替换：ssets/emu/libJCC.so → 2.5.1 赛季 SO（真机扫描偏移）
-- 签名：debug keystore（可自行重签）
+## 日志
+
+- `/data/user/0/com.tencent.jkchess/files/jcc_full.log`
+- `/sdcard/Download/jcc-scan/jcc_full.log`

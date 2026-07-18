@@ -1,5 +1,8 @@
 ﻿debug.keystore
 *.apk
+!dist/*.md
 libJCC.so
 tmp/
-JCC-Controller-2.5.1-unsigned.apk
+_pack_*
+JCC-Controller-*-unsigned.apk
+signing/_jar_extract/
