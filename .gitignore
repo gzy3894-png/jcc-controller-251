@@ -1,0 +1,5 @@
+﻿debug.keystore
+*.apk
+libJCC.so
+tmp/
+JCC-Controller-2.5.1-unsigned.apk

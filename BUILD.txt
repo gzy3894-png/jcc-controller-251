@@ -1,0 +1,2 @@
+﻿# build Controller 2.5.1 from original APK + new SO
+# requires: jarsigner, keytool, original APK, new libJCC.so
