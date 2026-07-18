@@ -1,0 +1,474 @@
+# libJCC.so reverse notes
+size=1149112
+## LOAD segments
+- off=0x0 va=0x0 sz=0x10e890 flags=5
+- off=0x10e890 va=0x10f890 sz=0x9410 flags=6
+- off=0x117ca0 va=0x119ca0 sz=0x2c0 flags=6
+
+## Sections (exec/rodata)
+- .rodata va=0x46870 off=0x46870 sz=0xab9c
+- .text va=0x77bb0 off=0x77bb0 sz=0x94f28
+- .plt va=0x10cae0 off=0x10cae0 sz=0x1db0
+- .data.rel.ro va=0x10f890 off=0x10e890 sz=0x7be8
+- .data va=0x119ca0 off=0x117ca0 sz=0x2c0
+
+## Key strings (file offset + VA)
+- 0x15ee0 va=0x15ee0  `DobbyHook`
+- 0x1c0a1 va=0x1c0a1  `_ZNSt6__ndk18ios_base11adjustfieldE`
+- 0x1c0c5 va=0x1c0c5  `_ZNSt6__ndk18ios_base9basefieldE`
+- 0x1c0e6 va=0x1c0e6  `_ZNSt6__ndk18ios_base10floatfieldE`
+- 0x46870 va=0x46870  `[+] TinyHero Hooks: %d/5`
+- 0x469b2 va=0x469b2  `[STEP 2a] il2cpp_domain_get = %p`
+- 0x469d3 va=0x469d3  `il2cpp_class_from_name`
+- 0x46bbc va=0x46bbc  `[+] Network Hooks: %d/2`
+- 0x46c16 va=0x46c16  `BuyHeroView`
+- 0x46c22 va=0x46c22  `GetMatchPlayerId`
+- 0x46c3b va=0x46c3b  `[STEP 2] libil2cpp.so found, resolving symbols...`
+- 0x46c6d va=0x46c6d  `il2cpp_domain_get`
+- 0x46ea1 va=0x46ea1  `[STEP 5a] il2cpp_thread_current() = %p`
+- 0x4736d va=0x4736d  `[+] UpdateNameAndMoney Hook `
+- 0x47466 va=0x47466  `OPPONENT_BOARD:`
+- 0x474db va=0x474db  `[STEP 5a] Checking il2cpp_thread_current()...`
+- 0x47661 va=0x47661  `DataBaseManager`
+- 0x47700 va=0x47700  ` Hooks...`
+- 0x4770a va=0x4770a  `[+] OnRefreshHeroRet Hook `
+- 0x477b6 va=0x477b6  `il2cpp_assembly_get_image`
+- 0x47979 va=0x47979  ` Hook `
+- 0x47a49 va=0x47a49  `il2cpp_class_get_type`
+- 0x47b86 va=0x47b86  `PlayerListPanel`
+- 0x47bd3 va=0x47bd3  `il2cpp_type_get_object`
+- 0x47bea va=0x47bea  `il2cpp_object_new`
+- 0x47dbf va=0x47dbf  `ChessBattleGlobal`
+- 0x47e14 va=0x47e14  `[MapHook] UpdateBattleMap: `
+- 0x47e4a va=0x47e4a  `tft_battlefield_center`
+- 0x47ef3 va=0x47ef3  `OPPONENT_BOARD_CLEAR`
+- 0x4803d va=0x4803d  `il2cpp_resolve_icall`
+- 0x480b3 va=0x480b3  ` at offset `
+- 0x48119 va=0x48119  `libunwind: malformed DW_CFA_offset_extended_sf DWARF unwind, reg too big`
+- 0x48200 va=0x48200  `[+] Logic Hooks: %d/3`
+- 0x487eb va=0x487eb  `PlayerModel`
+- 0x48877 va=0x48877  `il2cpp_is_vm_thread`
+- 0x489f0 va=0x489f0  `libunwind: malformed DW_CFA_offset_extended DWARF unwind, reg too big`
+- 0x48b5c va=0x48b5c  ` Hooks `
+- 0x48f70 va=0x48f70  `OnRefreshHeroRet`
+- 0x48f8b va=0x48f8b  ` SearchACGHero2`
+- 0x48fff va=0x48fff  `HextechAugmentsCtrl/StaticField`
+- 0x49221 va=0x49221  `[+] Render Hooks: %d/2`
+- 0x49294 va=0x49294  ` hero_heads.txt`
+- 0x492a4 va=0x492a4  `PlayerListItem`
+- 0x492e4 va=0x492e4  `[STEP 1] Searching for libil2cpp.so via xdl_open...`
+- 0x49528 va=0x49528  `GetHeroHeadIconAB`
+- 0x49556 va=0x49556  `[-] extractHeroHeadImages: `
+- 0x49587 va=0x49587  `/data/user/0/com.tencent.jkchess/files/hero_heads/%d_%s.tga`
+- 0x4990f va=0x4990f  `# SearchACGHero `
+- 0x4994e va=0x4994e  `[STEP 4] il2cpp_is_vm_thread(nullptr) = %d`
+- 0x49b77 va=0x49b77  `[+] View Hooks: %d/2`
+- 0x49bad va=0x49bad  `SearchTinyHero`
+- 0x49c24 va=0x49c24  `il2cpp_thread_attach`
+- 0x49dcb va=0x49dcb  `libunwind: malformed DW_CFA_val_offset DWARF unwind, reg (%lu) out of range`
+- 0x4a3a8 va=0x4a3a8  `[STEP 5] il2cpp_thread_attach = %p`
+- 0x4a3cb va=0x4a3cb  `[STEP 5b] Calling il2cpp_domain_get()...`
+- 0x4a58e va=0x4a58e  `ChessBattleLogicPlayer`
+- 0x4a5b1 va=0x4a5b1  `SearchACGAttackEffect`
+- 0x4a672 va=0x4a672  `SearchACGHero`
+- 0x4a6b7 va=0x4a6b7  `IsUseBuyheroview_iPad`
+- 0x4a714 va=0x4a714  `FATAL: libil2cpp.so not found`
+- 0x4a732 va=0x4a732  `il2cpp_domain_get_assemblies`
+- 0x4a74f va=0x4a74f  `il2cpp_class_get_method_from_name`
+- 0x4a8a5 va=0x4a8a5  `libunwind: malformed DW_CFA_GNU_negative_offset_extended DWARF unwind, reg too big`
+- 0x4a9dd va=0x4a9dd  `/data/user/0/com.tencent.jkchess/files/hero_heads/`
+- 0x4aa5d va=0x4aa5d  `il2cpp_thread_detach`
+- 0x4aa9b va=0x4aa9b  `ReqBuyHero`
+- 0x4ab51 va=0x4ab51  `get_Instance`
+- 0x4ac0c va=0x4ac0c  `[-] dumpHeroHeadInfo: SearchACGHero `
+- 0x4ac33 va=0x4ac33  ` DataBaseManager `
+- 0x4ac8a va=0x4ac8a  `il2cpp_thread_current`
+- 0x4ae34 va=0x4ae34  `[MapSwitch] UpdateBattleMap `
+- 0x4aec8 va=0x4aec8  `[MapHook] UpdateBattleMap: `
+- 0x4af00 va=0x4af00  `[-] UpdateBattleMap Hook `
+- 0x4af5c va=0x4af5c  `HeroRoot`
+- 0x4b0d9 va=0x4b0d9  `libil2cpp.so`
+- 0x4b0e6 va=0x4b0e6  `il2cpp_string_new`
+- 0x4b190 va=0x4b190  `[DBG] dumpHeroHeadInfo: mSearchHero=%p db=%p mGetItemName=%p mGetHeadAB=%p`
+- 0x4b3e0 va=0x4b3e0  `[+] ExecuteGameStart Hook `
+- 0x4b4f3 va=0x4b4f3  `FATAL: il2cpp function pointers NULL`
+- 0x4b518 va=0x4b518  `[STEP 4] Calling il2cpp_is_vm_thread(nullptr)...`
+- 0x4b9e8 va=0x4b9e8  `[-] PlayerModel.UpdateBattleMap `
+- 0x4be7d va=0x4be7d  `[+] Database Hooks: %d/1`
+- 0x4c0b1 va=0x4c0b1  `[-] UpdateNameAndMoney Hook `
+- 0x4c267 va=0x4c267  `ChessBattleModel`
+- 0x4c2a5 va=0x4c2a5  `[+] PlayerModel.UpdateBattleMap Hook `
+- 0x4c304 va=0x4c304  `: il2cpp_resolve_icall `
+- 0x4c398 va=0x4c398  `[STEP 5c] Calling il2cpp_thread_attach(domain)...`
+- 0x4c565 va=0x4c565  `GetMyPlayerModel`
+- 0x4c5b9 va=0x4c5b9  `UpdateBattleMap`
+- 0x4c661 va=0x4c661  `/data/user/0/com.tencent.jkchess/files/hero_heads.txt`
+- 0x4c6aa va=0x4c6aa  `|sHeroPaintSmall|sHeroPaint|AB`
+- 0x4c756 va=0x4c756  `il2cpp_object_unbox`
+- 0x4ca33 va=0x4ca33  `libunwind: malformed DW_CFA_val_offset_sf DWARF unwind, reg too big`
+- 0x4cb46 va=0x4cb46  `SearchACGHero2`
+- 0x4cb62 va=0x4cb62  ` SearchACGHero`
+- 0x4cbed va=0x4cbed  `|ERR:noPlayerListPanel`
+- 0x4cc73 va=0x4cc73  `il2cpp_runtime_invoke`
+- 0x4cd15 va=0x4cd15  `/data/local/tmp/libdebug_il2cpp.so`
+- 0x4d279 va=0x4d279  `25FunctionInlineHookRouting`
+
+## String xrefs (approx ADRP/ADD or LDR literal)
+- `libil2cpp.so` xref @ 0x77e4c (adrp 0x77e48)
+- `il2cpp_string_new` xref @ 0x77e60 (adrp 0x77e5c)
+- `ChessBattleGlobal` xref @ 0x78264 (adrp 0x78260)
+- `get_Instance` xref @ 0x7826c (adrp 0x78268)
+- `get_Instance` xref @ 0x782dc (adrp 0x782d8)
+- `ChessBattleGlobal` xref @ 0x783b8 (adrp 0x783b4)
+- `get_Instance` xref @ 0x783c0 (adrp 0x783bc)
+- `get_Instance` xref @ 0x7841c (adrp 0x78418)
+- `ChessBattleModel` xref @ 0x784c8 (adrp 0x784c4)
+- `ChessBattleGlobal` xref @ 0x78578 (adrp 0x78574)
+- `get_Instance` xref @ 0x78580 (adrp 0x7857c)
+- `get_Instance` xref @ 0x7883c (adrp 0x78838)
+- `ChessBattleModel` xref @ 0x788ec (adrp 0x788e8)
+- `GetMyPlayerModel` xref @ 0x788f4 (adrp 0x788f0)
+- `get_Instance` xref @ 0x7898c (adrp 0x78988)
+- `DataBaseManager` xref @ 0x78abc (adrp 0x78ab8)
+- `get_Instance` xref @ 0x78ac4 (adrp 0x78ac0)
+- `[+] TinyHero Hooks: %d/5` xref @ 0x7901c (adrp 0x79018)
+- `get_Instance` xref @ 0x79094 (adrp 0x79090)
+- `get_Instance` xref @ 0x792ec (adrp 0x792e8)
+- `get_Instance` xref @ 0x79444 (adrp 0x79440)
+- `get_Instance` xref @ 0x796a0 (adrp 0x7969c)
+- `get_Instance` xref @ 0x797b4 (adrp 0x797b0)
+- `get_Instance` xref @ 0x79bcc (adrp 0x79bc8)
+- `get_Instance` xref @ 0x79d70 (adrp 0x79d6c)
+- `get_Instance` xref @ 0x79e90 (adrp 0x79e8c)
+- `[MapSwitch] UpdateBattleMap ` xref @ 0x7a19c (adrp 0x7a198)
+- `[MapHook] UpdateBattleMap: ` xref @ 0x7a36c (adrp 0x7a368)
+- `tft_battlefield_center` xref @ 0x7a5dc (adrp 0x7a5d8)
+- `PlayerModel` xref @ 0x7a7f8 (adrp 0x7a7f4)
+- `UpdateBattleMap` xref @ 0x7a800 (adrp 0x7a7fc)
+- `[-] UpdateBattleMap Hook ` xref @ 0x7a83c (adrp 0x7a838)
+- `[-] PlayerModel.UpdateBattleMap ` xref @ 0x7a88c (adrp 0x7a888)
+- `[+] PlayerModel.UpdateBattleMap Hook ` xref @ 0x7a8b4 (adrp 0x7a8b0)
+- `[+] Network Hooks: %d/2` xref @ 0x7b574 (adrp 0x7b570)
+- `ChessBattleLogicPlayer` xref @ 0x7b678 (adrp 0x7b674)
+- `[+] Logic Hooks: %d/3` xref @ 0x7b6b8 (adrp 0x7b6b4)
+- `[+] Render Hooks: %d/2` xref @ 0x7b7b4 (adrp 0x7b7b0)
+- `[+] View Hooks: %d/2` xref @ 0x7b9ac (adrp 0x7b9a8)
+- `DataBaseManager` xref @ 0x7ba34 (adrp 0x7ba30)
+- `SearchACGAttackEffect` xref @ 0x7ba3c (adrp 0x7ba38)
+- `[+] Database Hooks: %d/1` xref @ 0x7ba7c (adrp 0x7ba78)
+- `[+] ExecuteGameStart Hook ` xref @ 0x7bb28 (adrp 0x7bb24)
+- `get_Instance` xref @ 0x7bff4 (adrp 0x7bff0)
+- `DataBaseManager` xref @ 0x7c4b8 (adrp 0x7c4b4)
+- `SearchACGAttackEffect` xref @ 0x7c4c0 (adrp 0x7c4bc)
+- `DataBaseManager` xref @ 0x7c5c0 (adrp 0x7c5bc)
+- `SearchACGAttackEffect` xref @ 0x7c5c8 (adrp 0x7c5c4)
+- `DataBaseManager` xref @ 0x7cac8 (adrp 0x7cac4)
+- `SearchTinyHero` xref @ 0x7cad0 (adrp 0x7cacc)
+- `DataBaseManager` xref @ 0x7cff0 (adrp 0x7cfec)
+- `SearchTinyHero` xref @ 0x7cff8 (adrp 0x7cff4)
+- `BuyHeroView` xref @ 0x7d6cc (adrp 0x7d6c8)
+- `BuyHeroView` xref @ 0x7d8a8 (adrp 0x7d8a4)
+- `OnRefreshHeroRet` xref @ 0x7d8b0 (adrp 0x7d8ac)
+- `[+] OnRefreshHeroRet Hook ` xref @ 0x7d8e4 (adrp 0x7d8e0)
+- `HeroRoot` xref @ 0x7d9a8 (adrp 0x7d9a4)
+- `[-] UpdateNameAndMoney Hook ` xref @ 0x7d9c8 (adrp 0x7d9c4)
+- `[-] UpdateNameAndMoney Hook ` xref @ 0x7da08 (adrp 0x7da04)
+- `[+] UpdateNameAndMoney Hook ` xref @ 0x7da14 (adrp 0x7da10)
+- `GetHeroHeadIconAB` xref @ 0x7e05c (adrp 0x7e058)
+- `[DBG] dumpHeroHeadInfo: mSearchHero=%p db=%p mGetItemName=%p mGetHeadAB=%p` xref @ 0x7e080 (adrp 0x7e07c)
+- `/data/user/0/com.tencent.jkchess/files/hero_heads.txt` xref @ 0x7e0b8 (adrp 0x7e0b4)
+- `[-] dumpHeroHeadInfo: SearchACGHero ` xref @ 0x7e220 (adrp 0x7e21c)
+- `DataBaseManager` xref @ 0x7e234 (adrp 0x7e230)
+- `SearchACGHero2` xref @ 0x7e23c (adrp 0x7e238)
+- `DataBaseManager` xref @ 0x7e270 (adrp 0x7e26c)
+- `SearchACGHero` xref @ 0x7e278 (adrp 0x7e274)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x7e4e0 (adrp 0x7e398)
+- `DataBaseManager` xref @ 0x7e60c (adrp 0x7e608)
+- `SearchACGHero2` xref @ 0x7e614 (adrp 0x7e610)
+- `DataBaseManager` xref @ 0x7e634 (adrp 0x7e630)
+- `SearchACGHero` xref @ 0x7e63c (adrp 0x7e638)
+- `DataBaseManager` xref @ 0x7ef68 (adrp 0x7ef64)
+- `SearchACGHero2` xref @ 0x7ef70 (adrp 0x7ef6c)
+- `DataBaseManager` xref @ 0x7ef90 (adrp 0x7ef8c)
+- `SearchACGHero` xref @ 0x7ef98 (adrp 0x7ef94)
+- `GetHeroHeadIconAB` xref @ 0x7efd4 (adrp 0x7efd0)
+- `/data/user/0/com.tencent.jkchess/files/hero_heads/` xref @ 0x7effc (adrp 0x7eff8)
+- `[-] extractHeroHeadImages: ` xref @ 0x7f120 (adrp 0x7f11c)
+- `/data/user/0/com.tencent.jkchess/files/hero_heads/%d_%s.tga` xref @ 0x7fd7c (adrp 0x7fd78)
+- `/data/user/0/com.tencent.jkchess/files/hero_heads/` xref @ 0x803f0 (adrp 0x803ec)
+- `get_Instance` xref @ 0x80f98 (adrp 0x80f94)
+- `DataBaseManager` xref @ 0x81020 (adrp 0x8101c)
+- `SearchACGHero2` xref @ 0x81028 (adrp 0x81024)
+- `DataBaseManager` xref @ 0x81048 (adrp 0x81044)
+- `SearchACGHero` xref @ 0x81050 (adrp 0x8104c)
+- `get_Instance` xref @ 0x8225c (adrp 0x82258)
+- `DataBaseManager` xref @ 0x82578 (adrp 0x82574)
+- `SearchACGHero2` xref @ 0x82580 (adrp 0x8257c)
+- `DataBaseManager` xref @ 0x825a4 (adrp 0x825a0)
+- `SearchACGHero` xref @ 0x825ac (adrp 0x825a8)
+- `PlayerListPanel` xref @ 0x83450 (adrp 0x8344c)
+- `|ERR:noPlayerListPanel` xref @ 0x835ac (adrp 0x835a8)
+- `ChessBattleModel` xref @ 0x839e4 (adrp 0x839e0)
+- `GetMatchPlayerId` xref @ 0x839ec (adrp 0x839e8)
+- `PlayerListItem` xref @ 0x83ab0 (adrp 0x83aac)
+- `get_Instance` xref @ 0x84a64 (adrp 0x84a60)
+- `ChessBattleModel` xref @ 0x84b04 (adrp 0x84b00)
+- `ChessBattleModel` xref @ 0x84b90 (adrp 0x84b8c)
+- `GetMatchPlayerId` xref @ 0x84b98 (adrp 0x84b94)
+- `ChessBattleModel` xref @ 0x84e10 (adrp 0x84e0c)
+- `GetMatchPlayerId` xref @ 0x84e18 (adrp 0x84e14)
+- `ChessBattleModel` xref @ 0x84e94 (adrp 0x84e90)
+- `ChessBattleModel` xref @ 0x851cc (adrp 0x851c8)
+- `get_Instance` xref @ 0x860e4 (adrp 0x860e0)
+- `DataBaseManager` xref @ 0x86168 (adrp 0x86164)
+- `SearchACGHero2` xref @ 0x86170 (adrp 0x8616c)
+- `DataBaseManager` xref @ 0x86190 (adrp 0x8618c)
+- `SearchACGHero` xref @ 0x86198 (adrp 0x86194)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x862a0 (adrp 0x83aac)
+- `ChessBattleModel` xref @ 0x86370 (adrp 0x8636c)
+- `DataBaseManager` xref @ 0x86a6c (adrp 0x86a68)
+- `SearchACGHero2` xref @ 0x86a74 (adrp 0x86a70)
+- `DataBaseManager` xref @ 0x86a98 (adrp 0x86a94)
+- `SearchACGHero` xref @ 0x86aa0 (adrp 0x86a9c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x8743c (adrp 0x83aac)
+- `get_Instance` xref @ 0x87be4 (adrp 0x87be0)
+- `ChessBattleGlobal` xref @ 0x87c50 (adrp 0x87c4c)
+- `get_Instance` xref @ 0x87c58 (adrp 0x87c54)
+- `IsUseBuyheroview_iPad` xref @ 0x87ce8 (adrp 0x87ce4)
+- `ChessBattleModel` xref @ 0x87d24 (adrp 0x87d20)
+- `GetMatchPlayerId` xref @ 0x87d2c (adrp 0x87d28)
+- `ChessBattleGlobal` xref @ 0x87ed4 (adrp 0x87ed0)
+- `get_Instance` xref @ 0x87edc (adrp 0x87ed8)
+- `DataBaseManager` xref @ 0x87fb8 (adrp 0x87fb4)
+- `SearchACGHero2` xref @ 0x87fc0 (adrp 0x87fbc)
+- `DataBaseManager` xref @ 0x87fe4 (adrp 0x87fe0)
+- `SearchACGHero` xref @ 0x87fec (adrp 0x87fe8)
+- `OPPONENT_BOARD:` xref @ 0x884c0 (adrp 0x884bc)
+- `get_Instance` xref @ 0x88970 (adrp 0x8896c)
+- `ChessBattleModel` xref @ 0x889c4 (adrp 0x889c0)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x88be0 (adrp 0x88bdc)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x8f2c4 (adrp 0x8ebd4)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x92034 (adrp 0x9143c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x93d88 (adrp 0x93d58)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9409c (adrp 0x93d58)
+- `[STEP 1] Searching for libil2cpp.so via xdl_open...` xref @ 0x94a64 (adrp 0x94a60)
+- `libil2cpp.so` xref @ 0x94a7c (adrp 0x94a78)
+- `libil2cpp.so` xref @ 0x94ac4 (adrp 0x94ac0)
+- `[STEP 2] libil2cpp.so found, resolving symbols...` xref @ 0x94ae4 (adrp 0x94ae0)
+- `il2cpp_domain_get` xref @ 0x94afc (adrp 0x94af8)
+- `[STEP 2a] il2cpp_domain_get = %p` xref @ 0x94b18 (adrp 0x94b14)
+- `il2cpp_domain_get_assemblies` xref @ 0x94b34 (adrp 0x94b30)
+- `il2cpp_assembly_get_image` xref @ 0x94b4c (adrp 0x94b48)
+- `il2cpp_class_from_name` xref @ 0x94b6c (adrp 0x94b68)
+- `il2cpp_class_get_method_from_name` xref @ 0x94b8c (adrp 0x94b88)
+- `il2cpp_runtime_invoke` xref @ 0x94bac (adrp 0x94ba8)
+- `il2cpp_class_get_type` xref @ 0x94bcc (adrp 0x94bc8)
+- `il2cpp_type_get_object` xref @ 0x94bec (adrp 0x94be8)
+- `il2cpp_object_unbox` xref @ 0x94c0c (adrp 0x94c08)
+- `il2cpp_object_new` xref @ 0x94c2c (adrp 0x94c28)
+- `il2cpp_resolve_icall` xref @ 0x94c4c (adrp 0x94c48)
+- `il2cpp_thread_current` xref @ 0x94c88 (adrp 0x94c84)
+- `il2cpp_is_vm_thread` xref @ 0x94ca0 (adrp 0x94c9c)
+- `il2cpp_thread_detach` xref @ 0x94cbc (adrp 0x94cb8)
+- `[STEP 4] Calling il2cpp_is_vm_thread(nullptr)...` xref @ 0x94d5c (adrp 0x94d58)
+- `[STEP 4] il2cpp_is_vm_thread(nullptr) = %d` xref @ 0x94d84 (adrp 0x94d80)
+- `il2cpp_thread_attach` xref @ 0x94dbc (adrp 0x94db8)
+- `[STEP 5] il2cpp_thread_attach = %p` xref @ 0x94ddc (adrp 0x94dd8)
+- `[STEP 5a] Checking il2cpp_thread_current()...` xref @ 0x94e00 (adrp 0x94dfc)
+- `[STEP 5a] il2cpp_thread_current() = %p` xref @ 0x94e20 (adrp 0x94e1c)
+- `FATAL: libil2cpp.so not found` xref @ 0x94e5c (adrp 0x94e58)
+- `FATAL: il2cpp function pointers NULL` xref @ 0x94e84 (adrp 0x94e80)
+- `[STEP 5b] Calling il2cpp_domain_get()...` xref @ 0x94f48 (adrp 0x94f44)
+- `[STEP 5c] Calling il2cpp_thread_attach(domain)...` xref @ 0x94f80 (adrp 0x94f7c)
+- `HeroRoot` xref @ 0x95218 (adrp 0x95214)
+- `ReqBuyHero` xref @ 0x95220 (adrp 0x9521c)
+- `BuyHeroView` xref @ 0x95240 (adrp 0x9523c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9775c (adrp 0x97700)
+- `/data/local/tmp/libdebug_il2cpp.so` xref @ 0x98198 (adrp 0x98194)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x98c70 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x98fe4 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x99610 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x997bc (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x997f8 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9a760 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9a7a8 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9b1e4 (adrp 0x9acc4)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9b224 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9b230 (adrp 0x9acc4)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9c1e4 (adrp 0x9acc4)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9c320 (adrp 0x9acc4)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9c444 (adrp 0x9acc4)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9ca6c (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9ca98 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9cd50 (adrp 0x9acc4)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9ce4c (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9ce78 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9cf44 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9cf70 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9d074 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9d580 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9d5ac (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9d678 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9d6a4 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9d7a8 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9dc10 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9dc3c (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9dd08 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9dd34 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9de38 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x9e7fc (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa0f10 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa10e8 (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa166c (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa19f0 (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa1abc (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa1f84 (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa20d0 (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa286c (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa29c4 (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa2b64 (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa2edc (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa33a4 (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa34ec (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa3608 (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa3700 (adrp 0xa0e44)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa3a6c (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa3bf0 (adrp 0x98130)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa4518 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa460c (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa4700 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa47f0 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa48ec (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa49cc (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa4ab0 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa4b88 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa4c60 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa4d90 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa4e80 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa4fa0 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa5090 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa52e8 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa5494 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa55c4 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa57a4 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa5894 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa5a64 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa5b54 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa5f0c (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa6168 (adrp 0xa378c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xa8720 (adrp 0xa868c)
+- `il2cpp_resolve_icall` xref @ 0xb34b0 (adrp 0xa75d4)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xbf8e4 (adrp 0xbf858)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xbfd68 (adrp 0xbfcf8)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xc10d0 (adrp 0xc1044)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xc1554 (adrp 0xc14e4)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xe8e94 (adrp 0xe8d14)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xec840 (adrp 0xec73c)
+- `PlayerListItem` xref @ 0xf0348 (adrp 0xeff94)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf0dc4 (adrp 0xf0d3c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf1454 (adrp 0xf1448)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf17b4 (adrp 0xf17ac)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf1824 (adrp 0xf181c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf2480 (adrp 0xf2468)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf2bcc (adrp 0xf0d3c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf33f8 (adrp 0xf2468)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf342c (adrp 0xf2468)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf344c (adrp 0xf2468)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf3754 (adrp 0xf3744)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf38bc (adrp 0xf38ac)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf42a8 (adrp 0xf429c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf68d4 (adrp 0xf68cc)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf7738 (adrp 0xf7730)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf7814 (adrp 0xf780c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf7fb8 (adrp 0xf7fb0)
+- `HextechAugmentsCtrl/StaticField` xref @ 0xf7fcc (adrp 0xf7fc4)
+- `[STEP 5b] Calling il2cpp_domain_get()...` xref @ 0xfa42c (adrp 0xf3c4c)
+- `[STEP 5b] Calling il2cpp_domain_get()...` xref @ 0xfa960 (adrp 0xf3c4c)
+- `[STEP 5b] Calling il2cpp_domain_get()...` xref @ 0xfe9c0 (adrp 0xfdaec)
+- ` at offset ` xref @ 0xff940 (adrp 0xff93c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x100c14 (adrp 0x100a08)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x100c38 (adrp 0x100a08)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x101a40 (adrp 0x10100c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x101a64 (adrp 0x10100c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x101a9c (adrp 0x10100c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x101abc (adrp 0x10100c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x103d84 (adrp 0x103d7c)
+- `[STEP 5b] Calling il2cpp_domain_get()...` xref @ 0x1041a8 (adrp 0x1040d0)
+- `[STEP 5b] Calling il2cpp_domain_get()...` xref @ 0x104314 (adrp 0x1040d0)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x1043a8 (adrp 0x103d7c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x104440 (adrp 0x103d7c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x104478 (adrp 0x103d7c)
+- `[STEP 5b] Calling il2cpp_domain_get()...` xref @ 0x104ae0 (adrp 0x1040d0)
+- `[STEP 5b] Calling il2cpp_domain_get()...` xref @ 0x104c64 (adrp 0x1040d0)
+- `[STEP 5b] Calling il2cpp_domain_get()...` xref @ 0x10514c (adrp 0x1040d0)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x1074f0 (adrp 0x103d7c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x108370 (adrp 0x103d7c)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x109ff0 (adrp 0x103d7c)
+- `libunwind: malformed DW_CFA_offset_extended DWARF unwind, reg too big` xref @ 0x10ac7c (adrp 0x10ac78)
+- `libunwind: malformed DW_CFA_offset_extended_sf DWARF unwind, reg too big` xref @ 0x10ad1c (adrp 0x10ad18)
+- `libunwind: malformed DW_CFA_val_offset DWARF unwind, reg (%lu) out of range` xref @ 0x10ad44 (adrp 0x10ad40)
+- `libunwind: malformed DW_CFA_val_offset_sf DWARF unwind, reg too big` xref @ 0x10ad64 (adrp 0x10ad60)
+- `libunwind: malformed DW_CFA_GNU_negative_offset_extended DWARF unwind, reg too big` xref @ 0x10ad8c (adrp 0x10ad88)
+- `HextechAugmentsCtrl/StaticField` xref @ 0x10b6d0 (adrp 0x10ad9c)
+
+## LDR/STR field-offset immediates (common values)
+- imm 0x10 count=3363 e.g. ['0x77c04', '0x77cb0', '0x77cc4', '0x77e3c', '0x77e78', '0x77e88', '0x7809c', '0x78184']
+- imm 0x14 count=61 e.g. ['0x79610', '0x7961c', '0x79b3c', '0x79f60', '0x79fe4', '0x7dc1c', '0x7f704', '0x8031c']
+- imm 0x18 count=1450 e.g. ['0x7816c', '0x7821c', '0x78a34', '0x78a48', '0x794b0', '0x794f4', '0x79f5c', '0x79fe0']
+- imm 0x20 count=1115 e.g. ['0x78d4c', '0x78d54', '0x78d5c', '0x78e28', '0x78e2c', '0x78e34', '0x78ec4', '0x78ec8']
+- imm 0x24 count=114 e.g. ['0x83e88', '0x86f58', '0x8763c', '0x881ec', '0x88224', '0x8824c', '0x88280', '0x882b4']
+- imm 0x28 count=1040 e.g. ['0x77ec4', '0x77f74', '0x77fd8', '0x780b8', '0x7855c', '0x785c8', '0x787e4', '0x78b30']
+- imm 0x30 count=571 e.g. ['0x7851c', '0x78a24', '0x79608', '0x79b34', '0x79c7c', '0x79cd4', '0x7a90c', '0x7b1d0']
+- imm 0x34 count=23 e.g. ['0x7e540', '0x84ac8', '0x8b0b8', '0xb8a7c', '0xb9008', '0xb9594', '0xbce4c', '0xbd3d0']
+- imm 0x38 count=365 e.g. ['0x78a2c', '0x7a99c', '0x7aadc', '0x7ac0c', '0x7ac20', '0x7ac30', '0x7c33c', '0x7c6c8']
+- imm 0x60 count=239 e.g. ['0x783f4', '0x7b9f8', '0x7bab8', '0x7bdc8', '0x7d184', '0x7d1d0', '0x7d29c', '0x7d484']
+- imm 0x90 count=183 e.g. ['0x7e8b0', '0x7e9d0', '0x7eb00', '0x7f534', '0x7f5ac', '0x7f5f8', '0x7f6e0', '0x81558']
+- imm 0xf8 count=39 e.g. ['0x7f450', '0x80130', '0x804f8', '0x811e4', '0x816c8', '0x8275c', '0x86e34', '0x876cc']
+- imm 0x108 count=25 e.g. ['0x7e9fc', '0x7eb78', '0x85780', '0x85944', '0x85aec', '0x85cc0', '0x85e54', '0x897c0']
+- imm 0x148 count=6 e.g. ['0x7d6f0', '0x7d7bc', '0x8cb94', '0xe989c', '0x109de8', '0x10d1e4']
+- imm 0x1b0 count=37 e.g. ['0x79544', '0x79590', '0x7a2b4', '0x7a318', '0x811ac', '0x813f4', '0x8145c', '0x814d0']
+- imm 0x1c8 count=17 e.g. ['0x81a9c', '0x81f50', '0x8c9e8', '0x8cb2c', '0x8dc28', '0x8dcb8', '0xe0cec', '0xe4b0c']
+- imm 0x1e0 count=44 e.g. ['0x7f064', '0x7f080', '0x7f0d0', '0x7f248', '0x7f36c', '0x7f64c', '0x7fb64', '0x7fcf4']
+
+## Hook/API method strings present in SO
+- `OnRefreshHeroRet` count=2 first=0x4770e
+- `HandleRefreshBuyHero` count=0 first=ABSENT
+- `HandleBuyHero` count=0 first=ABSENT
+- `ReqBuyHero` count=1 first=0x4aa9b
+- `SearchACGHero` count=6 first=0x48f8c
+- `SearchACGHero2` count=2 first=0x48f8c
+- `GetMyPlayerModel` count=1 first=0x4c565
+- `get_MyPlayerId` count=1 first=0x4a52f
+- `GetMatchPlayerId` count=1 first=0x46c22
+- `UpdateBattleMap` count=7 first=0x47e1e
+- `BuyHeroView` count=1 first=0x46c16
+- `DataBaseManager` count=2 first=0x47661
+- `PlayerModel` count=4 first=0x487eb
+- `ChessBattleUnit` count=0 first=ABSENT
+- `UnitData` count=0 first=ABSENT
+- `PlayerListPanel` count=2 first=0x47b86
+- `get_Instance` count=1 first=0x4ab51
+
+## New season offsets (scan reference)
+- TACG_Hero_iID = 0x10
+- TACG_Hero_sName = 0x18
+- TACG_Hero_iCost = 0x60
+- TACG_Hero_sHeroPaintSmall = 0xf8
+- TACG_Hero_iSetNum = 0x114
+- UnitData_heroId = 0x14
+- UnitData_playerId = 0x24
+- UnitData_col = 0x30
+- UnitData_row = 0x34
+- UnitData_Level = 0x148
+- CBU_Data = 0x90
+- CBU_screen_head = 0x1b0
+- CBU_Show_Star = 0x1e0
+
+## Preliminary conclusion
+
+1. Method/class names exist as C-strings for il2cpp resolve + hooks.
+2. Field names like iID/iCost are NOT in the binary as strings → field access is
+   almost certainly hardcoded LDR/STR immediates (or computed).
+3. Next step: for each key string xref, disassemble surrounding function and list
+   all field immediates; map to scan offsets; prepare binary patch table.
+
