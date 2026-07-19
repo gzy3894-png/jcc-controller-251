@@ -57,3 +57,13 @@ P2: mapping feature xrefs to LDR imms for UnitData/board/hex/match player.
 - Critical: hero MATCH, PlayerModel key MATCH, shop hook retargetable (2.5.4 done)
 - Residual risk ~18%: mid-chain types, unscanned UI classes, need log closeout
 - File: worklog/FEASIBILITY-80.md
+
+## 2026-07-19T14:35:07.6592649+08:00
+### CONTINUE until user needed
+- Full resolve audit: 169 sites; game-critical OK on patched SO
+- ChessBattleStage.HandleRefreshBuyHero @0x7d8b8 OK in IDMAP
+- HeroRoot.ReqBuyHero OK; GetMatchPlayerId/GetMyPlayerModel/UpdateBattleMap OK
+- FAIL rows are UnityEngine APIs (false FAIL, not IDMAP)
+- Field MATCH: hero + PlayerModel key paths
+- PRODUCT: v2.5.4 with patch - NEED USER TEST + log.txt if crash
+- STOP for user install/test
