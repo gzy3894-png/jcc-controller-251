@@ -1,0 +1,371 @@
+# P2 Crash-offset candidates
+
+User report: original features crash on click → wrong memory/layout.
+Hero table path already MATCHES season; crash likely other structs.
+
+## New season reference offsets
+- `UnitData.heroId` = 0x14
+- `UnitData.playerId` = 0x24
+- `UnitData.col` = 0x30
+- `UnitData.row` = 0x34
+- `UnitData.Level` = 0x148
+- `UnitData.heroName` = 0x120
+- `UnitData.heroHeadIcon` = 0x140
+- `CBU.Data` = 0x90
+- `CBU.battleData` = 0x1c8
+- `CBU.screen_top` = 0x1a4
+- `CBU.screen_head` = 0x1b0
+- `CBU.Show_Star` = 0x1e0
+- `PlayerModel.hexAugmentModel` = 0x28
+- `ChessBattleModel.playerModelDict` = 0x38
+
+## Feature `GetMatchPlayerId`
+- string va=0x46c22 xrefs=['0x839ec', '0x84b98', '0x84e18', '0x87d2c']
+
+### window near 0x839ec (imm sample)
+- #0xc x1 e.g. 0x83a34 str w8, [sp, #0xc]
+- #0x10 x1 e.g. 0x839b8 ldr x8, [x8, #0x10]
+- #0x18 x2 e.g. 0x83980 ldr x23, [sp, #0x18]
+- #0x20 x1 e.g. 0x83e5c ldr w21, [sp, #0x20]
+- #0x24 x1 NEW=['UnitData.playerId'] e.g. 0x83e88 ldr w20, [sp, #0x24]
+- #0x28 x3 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x83b1c ldr x24, [sp, #0x28]
+- #0x30 x3 NEW=['UnitData.col'] e.g. 0x83b50 ldr w8, [sp, #0x30]
+- #0x38 x2 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x839a0 str x8, [sp, #0x38]
+- #0x40 x3 e.g. 0x83994 ldr x8, [sp, #0x40]
+- #0x48 x4 e.g. 0x83974 str x8, [sp, #0x48]
+- #0xb0 x3 e.g. 0x839cc str w8, [sp, #0xb0]
+- #0xf0 x1 e.g. 0x83d88 str w23, [sp, #0xf0]
+
+### window near 0x84b98 (imm sample)
+- #0x10 x8 e.g. 0x84cf0 ldr x8, [x0, #0x10]
+- #0x14 x1 NEW=['UnitData.heroId'] e.g. 0x84c24 str w24, [sp, #0x14]
+- #0x18 x3 e.g. 0x84c1c str x21, [sp, #0x18]
+- #0x20 x2 e.g. 0x85034 str q0, [x23, #0x20]
+- #0x28 x2 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x84c64 ldr x8, [x21, #0x28]
+- #0x30 x1 NEW=['UnitData.col'] e.g. 0x84fdc ldr x11, [sp, #0x30]
+- #0x38 x2 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x84c18 ldr x20, [x25, #0x38]
+- #0x40 x2 e.g. 0x84bc4 str w8, [sp, #0x40]
+- #0x60 x1 e.g. 0x84cfc str q0, [x23, #0x60]
+- #0x1a0 x1 e.g. 0x84f48 str q0, [x21, #0x1a0]
+- #0x1c0 x1 e.g. 0x84f94 str q0, [x21, #0x1c0]
+- #0x1e0 x1 NEW=['CBU.Show_Star'] e.g. 0x84fbc str q0, [x21, #0x1e0]
+- #0x200 x1 e.g. 0x8500c str q0, [x21, #0x200]
+
+### window near 0x84e18 (imm sample)
+- #0xc x1 e.g. 0x85240 ldr w22, [sp, #0xc]
+- #0x10 x12 e.g. 0x84f3c ldr x8, [x0, #0x10]
+- #0x20 x3 e.g. 0x85034 str q0, [x23, #0x20]
+- #0x28 x1 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x85054 ldr x11, [sp, #0x28]
+- #0x30 x1 NEW=['UnitData.col'] e.g. 0x84fdc ldr x11, [sp, #0x30]
+- #0x38 x1 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x84f68 ldr x11, [sp, #0x38]
+- #0x40 x3 e.g. 0x85084 str q0, [x23, #0x40]
+- #0x60 x1 e.g. 0x85310 str q0, [x21, #0x60]
+- #0x80 x1 e.g. 0x85338 str q0, [x21, #0x80]
+- #0xa0 x1 e.g. 0x85384 str q0, [x21, #0xa0]
+- #0xc0 x1 e.g. 0x8535c ldrb w8, [sp, #0xc0]
+- #0xf0 x1 e.g. 0x85274 ldrb w8, [sp, #0xf0]
+- #0x130 x1 e.g. 0x8524c str x8, [sp, #0x130]
+- #0x150 x1 e.g. 0x85298 str x8, [sp, #0x150]
+- #0x1a0 x1 e.g. 0x84f48 str q0, [x21, #0x1a0]
+- #0x1b0 x1 NEW=['CBU.screen_head'] e.g. 0x85334 str x8, [sp, #0x1b0]
+- #0x1c0 x1 e.g. 0x84f94 str q0, [x21, #0x1c0]
+- #0x1d0 x1 e.g. 0x85380 str x8, [sp, #0x1d0]
+- #0x1e0 x1 NEW=['CBU.Show_Star'] e.g. 0x84fbc str q0, [x21, #0x1e0]
+- #0x200 x1 e.g. 0x8500c str q0, [x21, #0x200]
+
+### window near 0x87d2c (imm sample)
+- #0x10 x6 e.g. 0x87df4 ldr x20, [x9, #0x10]
+- #0x14 x1 NEW=['UnitData.heroId'] e.g. 0x880c4 strb wzr, [x21, #0x14]!
+- #0x18 x6 e.g. 0x87d90 ldr x10, [x9, #0x18]
+- #0x1c x3 e.g. 0x88228 ldur x12, [x12, #0x1c]
+- #0x20 x3 e.g. 0x87f90 ldr x19, [x8, #0x20]
+- #0x24 x4 NEW=['UnitData.playerId'] e.g. 0x881ec str wzr, [x11, #0x24]
+- #0x28 x4 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x87e6c ldr x8, [x23, #0x28]
+- #0x38 x1 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x87d88 ldr x9, [x19, #0x38]
+- #0x60 x2 e.g. 0x87cac ldr x8, [x8, #0x60]
+- #0x70 x1 e.g. 0x880fc str w8, [sp, #0x70]
+- #0x90 x1 NEW=['CBU.Data'] e.g. 0x88128 str x9, [sp, #0x90]
+- #0xf8 x1 e.g. 0x8814c ldr x0, [x22, #0xf8]
+- #0x100 x1 e.g. 0x87dd4 ldr x9, [x20, #0x100]
+
+## Feature `ReqBuyHero`
+- string va=0x4aa9b xrefs=['0x95220']
+
+### window near 0x95220 (imm sample)
+- #0x14 x1 NEW=['UnitData.heroId'] e.g. 0x954a4 str w19, [sp, #0x14]
+- #0x28 x1 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x953b4 ldr x8, [x24, #0x28]
+- #0x48 x1 e.g. 0x95378 ldr x8, [sp, #0x48]
+
+## Feature `OnRefreshHeroRet`
+- string va=0x48f70 xrefs=['0x7d8b0']
+
+### window near 0x7d8b0 (imm sample)
+- #0x10 x7 e.g. 0x7d850 ldr x0, [x0, #0x10]
+- #0x14 x1 NEW=['UnitData.heroId'] e.g. 0x7dc1c ldr w20, [x8, #0x14]
+- #0x18 x2 e.g. 0x7db44 ldr x0, [x19, #0x18]
+- #0x20 x4 e.g. 0x7d838 str x8, [x9, #0x20]
+- #0x28 x2 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x7dbe0 ldr x8, [x22, #0x28]
+- #0x40 x1 e.g. 0x7d834 ldr x8, [x8, #0x40]
+- #0x68 x1 e.g. 0x7dd44 ldr x19, [x19, #0x68]
+
+## Feature `PlayerListPanel`
+- string va=0x47b86 xrefs=['0x83450']
+
+### window near 0x83450 (imm sample)
+- #0x10 x4 e.g. 0x833e0 ldr x8, [x0, #0x10]
+- #0x18 x2 e.g. 0x83958 ldr x23, [sp, #0x18]
+- #0x28 x4 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x834d8 str x0, [sp, #0x28]
+- #0x30 x2 NEW=['UnitData.col'] e.g. 0x83540 str w8, [sp, #0x30]
+- #0x38 x1 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x839a0 str x8, [sp, #0x38]
+- #0x40 x3 e.g. 0x8361c str x0, [sp, #0x40]
+- #0x48 x4 e.g. 0x836d0 str x9, [sp, #0x48]
+- #0xb0 x8 e.g. 0x83408 ldrb w8, [sp, #0xb0]
+- #0xc0 x4 e.g. 0x83410 ldr x0, [sp, #0xc0]
+- #0xf0 x1 e.g. 0x837e0 str x27, [sp, #0xf0]
+
+## Feature `PlayerListItem`
+- string va=0x492a4 xrefs=['0x83ab0']
+
+### window near 0x83ab0 (imm sample)
+- #0xc x3 e.g. 0x83a34 str w8, [sp, #0xc]
+- #0x18 x1 e.g. 0x83b14 ldr x23, [sp, #0x18]
+- #0x20 x1 e.g. 0x83e5c ldr w21, [sp, #0x20]
+- #0x24 x1 NEW=['UnitData.playerId'] e.g. 0x83e88 ldr w20, [sp, #0x24]
+- #0x28 x3 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x83b1c ldr x24, [sp, #0x28]
+- #0x30 x3 NEW=['UnitData.col'] e.g. 0x83b50 ldr w8, [sp, #0x30]
+- #0x38 x3 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x83f58 ldr x8, [sp, #0x38]
+- #0x40 x2 e.g. 0x83ba4 str w8, [sp, #0x40]
+- #0x48 x2 e.g. 0x83b98 str x9, [sp, #0x48]
+- #0xb0 x3 e.g. 0x83c00 str x9, [sp, #0xb0]
+- #0xc0 x1 e.g. 0x84000 ldr x0, [sp, #0xc0]
+- #0xf0 x1 e.g. 0x83d88 str w23, [sp, #0xf0]
+
+## Feature `HextechAugmentsCtrl/StaticField`
+- string va=0x48fff xrefs=['0x88be0']
+
+### window near 0x88be0 (imm sample)
+- #0x10 x1 e.g. 0x88f38 str x0, [sp, #0x10]
+- #0x18 x1 e.g. 0x88dfc ldr x0, [sp, #0x18]
+- #0x20 x4 e.g. 0x88de4 ldrb w8, [sp, #0x20]
+- #0x28 x8 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x88c34 ldr x8, [x23, #0x28]
+- #0x30 x2 NEW=['UnitData.col'] e.g. 0x88dec ldr x0, [sp, #0x30]
+- #0x38 x2 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x88edc strb w8, [sp, #0x38]
+- #0x40 x1 e.g. 0x88c58 ldr x27, [sp, #0x40]
+- #0x50 x2 e.g. 0x88ec4 strb w8, [sp, #0x50]
+- #0x58 x1 e.g. 0x88c28 ldr x8, [x0, #0x58]
+- #0x68 x2 e.g. 0x88dac ldrb w8, [x8, #0x68]
+
+## Feature `UpdateBattleMap`
+- string va=0x4c5b9 xrefs=['0x7a800']
+
+### window near 0x7a800 (imm sample)
+- #0x10 x3 e.g. 0x7a990 ldr w21, [x19, #0x10]
+- #0x18 x2 e.g. 0x7acd8 ldr x20, [x19, #0x18]
+- #0x20 x4 e.g. 0x7a8e8 ldr w9, [x8, #0x20]
+- #0x28 x10 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x7a7f0 ldr x8, [x19, #0x28]
+- #0x30 x1 NEW=['UnitData.col'] e.g. 0x7a90c ldr x8, [x8, #0x30]
+- #0x38 x5 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x7a99c ldr w20, [x19, #0x38]
+- #0x3c x1 e.g. 0x7a9ac ldr w8, [x0, #0x3c]
+- #0xa0 x3 e.g. 0x7a7dc str x19, [sp, #0xa0]
+
+## Feature `OPPONENT_BOARD:`
+- string va=0x47466 xrefs=['0x884c0']
+
+### window near 0x884c0 (imm sample)
+- #0x10 x5 e.g. 0x884fc ldr x8, [x0, #0x10]
+- #0x18 x3 e.g. 0x884a0 ldr x8, [sp, #0x18]
+- #0x20 x6 e.g. 0x8852c ldrb w8, [sp, #0x20]
+- #0x28 x3 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x887e0 ldr x8, [x23, #0x28]
+- #0x30 x2 NEW=['UnitData.col'] e.g. 0x88788 ldr x0, [sp, #0x30]
+- #0x38 x4 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x885a8 ldrb w8, [sp, #0x38]
+- #0x48 x2 e.g. 0x885b4 ldr x0, [sp, #0x48]
+- #0x50 x6 e.g. 0x88508 str q0, [sp, #0x50]
+- #0x60 x3 e.g. 0x88504 str x8, [sp, #0x60]
+- #0x70 x6 e.g. 0x884d4 strb w8, [sp, #0x70]
+- #0x78 x1 e.g. 0x884dc str x9, [sp, #0x78]
+- #0x80 x4 e.g. 0x884c8 strb wzr, [sp, #0x80]
+- #0x90 x4 NEW=['CBU.Data'] e.g. 0x8855c str q0, [sp, #0x90]
+- #0xa0 x3 e.g. 0x88558 str x8, [sp, #0xa0]
+
+## Feature `ChessPlayerUnit`
+- string va=0x49e49 xrefs=['0x78b38', '0x78b8c', '0x78c64', '0x791a4', '0x79288', '0x7be18', '0x7be94', '0x7c11c', '0x7c1a4']
+
+### window near 0x78b38 (imm sample)
+- #0x10 x5 e.g. 0x78af0 ldr x19, [sp, #0x10]
+- #0x20 x9 e.g. 0x78d4c ldr w24, [x22, #0x20]
+- #0x28 x4 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x78b30 ldr x8, [x20, #0x28]
+
+### window near 0x78b8c (imm sample)
+- #0x10 x3 e.g. 0x78d20 ldr x24, [x22, #0x10]
+- #0x20 x9 e.g. 0x78d4c ldr w24, [x22, #0x20]
+- #0x28 x4 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x78b30 ldr x8, [x20, #0x28]
+
+### window near 0x78c64 (imm sample)
+- #0xc x1 e.g. 0x79164 str w0, [sp, #0xc]
+- #0x10 x4 e.g. 0x78d20 ldr x24, [x22, #0x10]
+- #0x20 x11 e.g. 0x78d4c ldr w24, [x22, #0x20]
+- #0x28 x4 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x78cb4 ldr x8, [x20, #0x28]
+
+### window near 0x791a4 (imm sample)
+- #0xc x3 e.g. 0x79164 str w0, [sp, #0xc]
+- #0x10 x5 e.g. 0x791d8 str x9, [sp, #0x10]
+- #0x14 x2 NEW=['UnitData.heroId'] e.g. 0x79610 ldr w9, [x8, #0x14]
+- #0x18 x2 e.g. 0x794b0 ldr x12, [x11, #0x18]
+- #0x20 x4 e.g. 0x7917c ldr w9, [x8, #0x20]
+- #0x28 x7 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x7915c ldr x8, [x21, #0x28]
+- #0x30 x1 NEW=['UnitData.col'] e.g. 0x79608 ldr x8, [x8, #0x30]
+- #0x40 x1 e.g. 0x79488 ldr w8, [x9, #0x40]
+- #0x50 x1 e.g. 0x79498 ldr w11, [x9, #0x50]
+- #0xa0 x2 e.g. 0x79520 str x21, [sp, #0xa0]
+- #0x1b0 x2 NEW=['CBU.screen_head'] e.g. 0x79544 ldr w8, [x0, #0x1b0]
+- #0x200 x3 e.g. 0x79574 ldr x0, [x20, #0x200]
+
+### window near 0x79288 (imm sample)
+- #0xc x2 e.g. 0x79248 str w20, [sp, #0xc]
+- #0x10 x5 e.g. 0x792bc str x9, [sp, #0x10]
+- #0x14 x2 NEW=['UnitData.heroId'] e.g. 0x79610 ldr w9, [x8, #0x14]
+- #0x18 x2 e.g. 0x794b0 ldr x12, [x11, #0x18]
+- #0x20 x2 e.g. 0x79260 ldr w9, [x8, #0x20]
+- #0x28 x6 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x79228 ldr x8, [x21, #0x28]
+- #0x30 x1 NEW=['UnitData.col'] e.g. 0x79608 ldr x8, [x8, #0x30]
+- #0x40 x1 e.g. 0x79488 ldr w8, [x9, #0x40]
+- #0x50 x1 e.g. 0x79498 ldr w11, [x9, #0x50]
+- #0xa0 x2 e.g. 0x79520 str x21, [sp, #0xa0]
+- #0x1b0 x2 NEW=['CBU.screen_head'] e.g. 0x79544 ldr w8, [x0, #0x1b0]
+- #0x200 x3 e.g. 0x79574 ldr x0, [x20, #0x200]
+
+### window near 0x7be18 (imm sample)
+- #0x18 x1 e.g. 0x7bdd4 ldr w19, [x8, #0x18]
+- #0x28 x8 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x7bfd0 ldr x8, [x20, #0x28]
+- #0x30 x1 NEW=['UnitData.col'] e.g. 0x7c334 ldr x8, [x8, #0x30]
+- #0x38 x1 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x7c33c ldr w4, [x8, #0x38]
+- #0x50 x1 e.g. 0x7bdc0 ldr x8, [x0, #0x50]
+- #0x60 x1 e.g. 0x7bdc8 ldr x8, [x8, #0x60]
+- #0xa0 x3 e.g. 0x7c0cc str x23, [sp, #0xa0]
+
+## Feature `get_MyPlayerId`
+- string va=0x4a52f xrefs=['0x784d0']
+
+### window near 0x784d0 (imm sample)
+- #0x10 x8 e.g. 0x78534 ldr x21, [sp, #0x10]
+- #0x18 x2 e.g. 0x78a34 ldr x8, [x8, #0x18]
+- #0x1c x1 e.g. 0x78524 ldr w0, [x8, #0x1c]
+- #0x28 x3 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x7855c ldr x8, [x20, #0x28]
+- #0x30 x2 NEW=['UnitData.col'] e.g. 0x7851c ldr x8, [x19, #0x30]
+- #0x38 x1 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x78a2c ldr x8, [x9, #0x38]
+- #0xe0 x1 e.g. 0x785b4 ldr x19, [x0, #0xe0]
+- #0xf0 x1 e.g. 0x78514 ldr w0, [x19, #0xf0]
+
+## Feature `GetPlayerRankByID`
+- string va=0x4c375 xrefs=['0x84b0c', '0x84e9c', '0x851d4', '0x86378']
+
+### window near 0x84b0c (imm sample)
+- #0x10 x10 e.g. 0x84a90 ldr x8, [x0, #0x10]
+- #0x14 x1 NEW=['UnitData.heroId'] e.g. 0x84c24 str w24, [sp, #0x14]
+- #0x18 x3 e.g. 0x84c1c str x21, [sp, #0x18]
+- #0x20 x4 e.g. 0x84ab4 ldr x9, [x8, #0x20]
+- #0x28 x2 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x84c64 ldr x8, [x21, #0x28]
+- #0x30 x1 NEW=['UnitData.col'] e.g. 0x84fdc ldr x11, [sp, #0x30]
+- #0x34 x1 NEW=['UnitData.row'] e.g. 0x84ac8 ldr w22, [x9, #0x34]
+- #0x38 x2 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x84c18 ldr x20, [x25, #0x38]
+- #0x40 x2 e.g. 0x84bc4 str w8, [sp, #0x40]
+- #0x60 x1 e.g. 0x84cfc str q0, [x23, #0x60]
+- #0x1a0 x1 e.g. 0x84f48 str q0, [x21, #0x1a0]
+- #0x1c0 x1 e.g. 0x84f94 str q0, [x21, #0x1c0]
+- #0x1e0 x1 NEW=['CBU.Show_Star'] e.g. 0x84fbc str q0, [x21, #0x1e0]
+- #0x200 x1 e.g. 0x8500c str q0, [x21, #0x200]
+
+### window near 0x84e9c (imm sample)
+- #0xc x1 e.g. 0x85240 ldr w22, [sp, #0xc]
+- #0x10 x15 e.g. 0x84f3c ldr x8, [x0, #0x10]
+- #0x20 x3 e.g. 0x85034 str q0, [x23, #0x20]
+- #0x28 x1 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x85054 ldr x11, [sp, #0x28]
+- #0x30 x1 NEW=['UnitData.col'] e.g. 0x84fdc ldr x11, [sp, #0x30]
+- #0x38 x1 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x84f68 ldr x11, [sp, #0x38]
+- #0x40 x3 e.g. 0x85084 str q0, [x23, #0x40]
+- #0x60 x1 e.g. 0x85310 str q0, [x21, #0x60]
+- #0x80 x1 e.g. 0x85338 str q0, [x21, #0x80]
+- #0xa0 x1 e.g. 0x85384 str q0, [x21, #0xa0]
+- #0xc0 x2 e.g. 0x8535c ldrb w8, [sp, #0xc0]
+- #0xe0 x1 e.g. 0x853f8 str q0, [x21, #0xe0]
+- #0xf0 x1 e.g. 0x85274 ldrb w8, [sp, #0xf0]
+- #0x130 x1 e.g. 0x8524c str x8, [sp, #0x130]
+- #0x150 x1 e.g. 0x85298 str x8, [sp, #0x150]
+- #0x1a0 x1 e.g. 0x84f48 str q0, [x21, #0x1a0]
+- #0x1b0 x1 NEW=['CBU.screen_head'] e.g. 0x85334 str x8, [sp, #0x1b0]
+- #0x1c0 x1 e.g. 0x84f94 str q0, [x21, #0x1c0]
+- #0x1d0 x1 e.g. 0x85380 str x8, [sp, #0x1d0]
+- #0x1e0 x1 NEW=['CBU.Show_Star'] e.g. 0x84fbc str q0, [x21, #0x1e0]
+- #0x200 x1 e.g. 0x8500c str q0, [x21, #0x200]
+
+### window near 0x851d4 (imm sample)
+- #0xc x1 e.g. 0x85240 ldr w22, [sp, #0xc]
+- #0x10 x21 e.g. 0x85244 ldr x8, [x0, #0x10]
+- #0x18 x1 e.g. 0x85620 ldr x21, [sp, #0x18]
+- #0x20 x2 e.g. 0x8529c str q0, [x21, #0x20]
+- #0x40 x3 e.g. 0x85260 ldr w0, [sp, #0x40]
+- #0x48 x2 e.g. 0x85608 ldrb w8, [sp, #0x48]
+- #0x60 x3 e.g. 0x85310 str q0, [x21, #0x60]
+- #0x78 x2 e.g. 0x854b8 ldrb w8, [sp, #0x78]
+- #0x80 x1 e.g. 0x85338 str q0, [x21, #0x80]
+- #0x90 x2 NEW=['CBU.Data'] e.g. 0x85444 ldrb w8, [sp, #0x90]
+- #0xa0 x1 e.g. 0x85384 str q0, [x21, #0xa0]
+- #0xc0 x3 e.g. 0x8535c ldrb w8, [sp, #0xc0]
+- #0xe0 x1 e.g. 0x853f8 str q0, [x21, #0xe0]
+- #0xf0 x1 e.g. 0x85274 ldrb w8, [sp, #0xf0]
+- #0x100 x1 e.g. 0x85420 str q0, [x21, #0x100]
+- #0x120 x1 NEW=['UnitData.heroName'] e.g. 0x8546c str q0, [x21, #0x120]
+- #0x130 x1 e.g. 0x8524c str x8, [sp, #0x130]
+- #0x140 x1 NEW=['UnitData.heroHeadIcon'] e.g. 0x85494 str q0, [x21, #0x140]
+- #0x150 x1 e.g. 0x85298 str x8, [sp, #0x150]
+- #0x160 x1 e.g. 0x854e0 str q0, [x21, #0x160]
+- #0x180 x2 e.g. 0x85508 str q0, [x21, #0x180]
+- #0x1a0 x2 e.g. 0x85554 str q0, [x21, #0x1a0]
+- #0x1b0 x1 NEW=['CBU.screen_head'] e.g. 0x85334 str x8, [sp, #0x1b0]
+- #0x1c0 x2 e.g. 0x85584 str q0, [x21, #0x1c0]
+- #0x1d0 x1 e.g. 0x85380 str x8, [sp, #0x1d0]
+- #0x1e0 x2 NEW=['CBU.Show_Star'] e.g. 0x855bc str q0, [x21, #0x1e0]
+- #0x200 x2 e.g. 0x855e4 str q0, [x21, #0x200]
+
+### window near 0x86378 (imm sample)
+- #0x10 x6 e.g. 0x86334 ldr w8, [x9, #0x10]
+- #0x18 x1 e.g. 0x86430 ldr x0, [x10, #0x18]
+- #0x1c x2 e.g. 0x865e0 ldr w8, [x8, #0x1c]
+- #0x20 x9 e.g. 0x863d8 ldr x9, [x23, #0x20]
+- #0x28 x3 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x8649c str x11, [sp, #0x28]
+- #0x30 x1 NEW=['UnitData.col'] e.g. 0x86318 ldr x8, [sp, #0x30]
+- #0x38 x1 NEW=['ChessBattleModel.playerModelDict'] e.g. 0x86328 ldr x8, [sp, #0x38]
+- #0x40 x11 e.g. 0x86418 str x10, [x21, #0x40]
+- #0x48 x11 e.g. 0x8630c ldr x1, [x21, #0x48]
+- #0x50 x7 e.g. 0x8641c ldr x10, [x23, #0x50]
+- #0x58 x1 e.g. 0x86834 ldr x24, [sp, #0x58]
+- #0x60 x1 e.g. 0x8682c str x8, [sp, #0x60]
+- #0xa0 x1 e.g. 0x8639c str x9, [sp, #0xa0]
+- #0xb0 x1 e.g. 0x86410 strb wzr, [sp, #0xb0]
+
+## Feature `RoundSelectPlayerUnit`
+- string va=0x48442 xrefs=['0x78bd4', '0x78c1c']
+
+### window near 0x78bd4 (imm sample)
+- #0x10 x3 e.g. 0x78d20 ldr x24, [x22, #0x10]
+- #0x20 x9 e.g. 0x78d4c ldr w24, [x22, #0x20]
+- #0x28 x3 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x78cb4 ldr x8, [x20, #0x28]
+
+### window near 0x78c1c (imm sample)
+- #0xc x1 e.g. 0x79164 str w0, [sp, #0xc]
+- #0x10 x3 e.g. 0x78d20 ldr x24, [x22, #0x10]
+- #0x20 x11 e.g. 0x78d4c ldr w24, [x22, #0x20]
+- #0x28 x4 NEW=['PlayerModel.hexAugmentModel'] e.g. 0x78cb4 ldr x8, [x20, #0x28]
+
+## Notes for patching
+
+ARM64 LDR (64-bit) imm12 is scaled by 8; LDR (32-bit) scaled by 4.
+Patching requires re-encoding the instruction, not just writing a byte.
+
+Next step: for each crash feature, pick the LDR that reads object fields
+(not stack #0x10/#0x20) and verify against scan; re-encode if mismatch.
+
+Hero path @0x7e4bc already verified MATCH — do not touch.
+
+
+## Total candidate sites: 480

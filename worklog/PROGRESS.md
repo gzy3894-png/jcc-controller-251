@@ -14,3 +14,18 @@
 - ChessBattleStage ABSENT in SO (uses other classes)
 - Wrote worklog/RESEARCH.md REV-libJCC.md REV-funcs.md rev_summary.json
 - Next: per-function offset evidence chains + PATCH-TABLE
+
+## 2026-07-19T12:25:09.9966112+08:00
+### P1 DONE
+- Hero field chain @0x7e4bc matches scan (no binary patch needed for hero)
+- Symbol diff written P1-symbol-diff.md
+- PATCH-TABLE.md: HERO no-op
+- Released v2.5.3 original-kernel APK (fixed sign)
+### Next P2/P3
+- Runtime hook logs if user reports still broken
+- Patch only confirmed mismatches (OnRefresh rename etc.)
+
+## 2026-07-19T13:11:31.8522489+08:00
+User clarified: crash on click = data/layout wrong, not guesswork.
+P1 hero path MATCH does NOT mean all features safe.
+P2: mapping feature xrefs to LDR imms for UnitData/board/hex/match player.
