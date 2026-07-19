@@ -1,78 +1,121 @@
 #!/usr/bin/env python3
-"""Pack Controller APK: hybrid SO into assets/emu/libJCC.so AND embed into assets/JCC.sh."""
 from __future__ import annotations
 
 import argparse
+import io
 import shutil
 import subprocess
 import sys
+import tarfile
 import zipfile
 from pathlib import Path
 
-def embedded_region(jcc_sh: bytes) -> tuple[int, int]:
-    import struct
+SHELL = r"""#!/system/bin/sh
+export PATH=/system/bin:/system/xbin:$PATH
+T=/data/local/tmp
+LOG=/data/user/0/com.tencent.jkchess/files/log.txt
+PKG=com.tencent.jkchess
+ME="$0"
 
-    first = jcc_sh.find(b"\x7fELF")
-    second = jcc_sh.find(b"\x7fELF", first + 1)
-    if second < 0:
-        raise SystemExit("second ELF not found in JCC.sh")
-    o = second
-    e_phoff = struct.unpack_from("<Q", jcc_sh, o + 32)[0]
-    e_phentsize = struct.unpack_from("<H", jcc_sh, o + 54)[0]
-    e_phnum = struct.unpack_from("<H", jcc_sh, o + 56)[0]
-    max_end = 0
-    for i in range(e_phnum):
-        off = o + e_phoff + i * e_phentsize
-        p_type = struct.unpack_from("<I", jcc_sh, off)[0]
-        p_offset = struct.unpack_from("<Q", jcc_sh, off + 8)[0]
-        p_filesz = struct.unpack_from("<Q", jcc_sh, off + 32)[0]
-        if p_type == 1:
-            max_end = max(max_end, p_offset + p_filesz)
-    if max_end < 100000:
-        raise SystemExit(f"embedded region too small: {max_end}")
-    return second, max_end
+log() {
+  echo "[wrap] $*" >> "$LOG" 2>/dev/null
+}
+
+N=$(grep -n '^__END__$' "$ME" | head -1 | cut -d: -f1)
+if [ -z "$N" ]; then log "no payload"; exit 1; fi
+N=$((N + 1))
+rm -rf "$T/jcc_pay"
+mkdir -p "$T/jcc_pay"
+tail -n +$N "$ME" > "$T/jcc_payload.tar" 2>/dev/null
+tar -xf "$T/jcc_payload.tar" -C "$T/jcc_pay" 2>/dev/null
+INJ="$T/jcc_pay/jcc_inject"
+SO="$T/jcc_pay/libJCC.so"
+if [ ! -f "$INJ" ] || [ ! -f "$SO" ]; then log "extract fail"; exit 1; fi
+chmod 755 "$INJ" "$SO"
+
+PID=""
+i=0
+while [ $i -lt 90 ]; do
+  PID=$(pidof "$PKG" 2>/dev/null)
+  if [ -n "$PID" ]; then break; fi
+  PID=$(ps -A 2>/dev/null | grep -F "$PKG" | grep -v grep | head -1 | awk '{print $2}')
+  if [ -n "$PID" ]; then break; fi
+  i=$((i + 1))
+  sleep 1
+done
+if [ -z "$PID" ]; then log "no pid"; exit 1; fi
+log "pid=$PID"
+sleep 2
+
+for D in /data/user/0/$PKG /data/data/$PKG; do
+  cp -f "$SO" "$D/libJCC.so" 2>/dev/null
+  chmod 755 "$D/libJCC.so" 2>/dev/null
+done
+cp -f "$SO" "$T/libJCC.so" 2>/dev/null
+chmod 755 "$T/libJCC.so" 2>/dev/null
+
+setenforce 0 2>/dev/null
+"$INJ" "$PID" "$SO" >> "$LOG" 2>&1
+EC=$?
+log "inject=$EC"
+sleep 2
+if [ $EC -eq 0 ]; then
+  echo "[+] OK"
+else
+  echo "[-] FAIL"
+fi
+exit $EC
+__END__
+"""
+
+
+def make_jcc_sh(inject_bin: bytes, so_bin: bytes) -> bytes:
+    buf = io.BytesIO()
+    with tarfile.open(fileobj=buf, mode="w") as tar:
+
+        def add(name: str, data: bytes, mode: int = 0o755):
+            info = tarfile.TarInfo(name=name)
+            info.size = len(data)
+            info.mode = mode
+            tar.addfile(info, io.BytesIO(data))
+
+        add("jcc_inject", inject_bin, 0o755)
+        add("libJCC.so", so_bin, 0o755)
+    script = SHELL.encode("utf-8")
+    if not script.endswith(b"\n"):
+        script += b"\n"
+    return script + buf.getvalue()
 
 
 def replace_in_apk(src_apk: Path, dst_apk: Path, replacements: dict[str, bytes]) -> None:
-    # read all, write new (zipfile update is fragile on Windows)
     with zipfile.ZipFile(src_apk, "r") as zin:
         infos = zin.infolist()
         blobs = {i.filename: zin.read(i.filename) for i in infos}
-
     for name, data in replacements.items():
         blobs[name] = data
-        print(f"  set {name} = {len(data)} bytes")
-
     if dst_apk.exists():
         dst_apk.unlink()
     with zipfile.ZipFile(dst_apk, "w", compression=zipfile.ZIP_DEFLATED) as zout:
+        seen = set()
         for info in infos:
             name = info.filename
-            # skip signatures
             if name.startswith("META-INF/") and (
-                name.endswith(".SF")
-                or name.endswith(".RSA")
-                or name.endswith(".DSA")
-                or name.endswith(".EC")
+                name.endswith((".SF", ".RSA", ".DSA", ".EC"))
                 or name == "META-INF/MANIFEST.MF"
                 or "ANDROID" in name
             ):
                 continue
-            data = blobs.get(name, b"")
-            # store SO/sh without recompress if we replaced
-            if name in replacements:
-                zi = zipfile.ZipInfo(filename=name)
-                zi.compress_type = zipfile.ZIP_STORED
-                zout.writestr(zi, data)
-            else:
-                zi = zipfile.ZipInfo(filename=name)
-                zi.compress_type = info.compress_type
-                zi.external_attr = info.external_attr
-                zi.date_time = info.date_time
-                zout.writestr(zi, data)
-        # if replacement name was not in original (shouldn't happen)
+            data = blobs[name]
+            seen.add(name)
+            zi = zipfile.ZipInfo(filename=name)
+            zi.date_time = info.date_time
+            zi.external_attr = info.external_attr
+            zi.compress_type = (
+                zipfile.ZIP_STORED if name in replacements else info.compress_type
+            )
+            zout.writestr(zi, data)
         for name, data in replacements.items():
-            if name not in {i.filename for i in infos}:
+            if name not in seen:
                 zi = zipfile.ZipInfo(filename=name)
                 zi.compress_type = zipfile.ZIP_STORED
                 zout.writestr(zi, data)
@@ -81,6 +124,7 @@ def replace_in_apk(src_apk: Path, dst_apk: Path, replacements: dict[str, bytes])
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--so", required=True)
+    ap.add_argument("--inject", required=True)
     ap.add_argument("--orig-apk", default=r"D:\grok-cli\bin\JCC Controller.apk")
     ap.add_argument("--out", required=True)
     ap.add_argument("--ks", default=None)
@@ -88,82 +132,53 @@ def main() -> int:
     args = ap.parse_args()
 
     root = Path(__file__).resolve().parents[1]
-    so_path = Path(args.so)
-    orig = Path(args.orig_apk)
-    out_apk = Path(args.out)
-    ks = Path(args.ks or root / "signing/jcc-controller.release.keystore")
-    jar = Path(args.signer_jar or root / "tools/uber-apk-signer.jar")
-
-    our = so_path.read_bytes()
-    if len(our) < 100000:
-        print("SO too small", len(our), file=sys.stderr)
+    so = Path(args.so).read_bytes()
+    inj = Path(args.inject).read_bytes()
+    if len(so) < 100000 or len(inj) < 1000:
+        print("bad inputs", file=sys.stderr)
         return 1
 
-    with zipfile.ZipFile(orig, "r") as z:
-        jcc_sh = z.read("assets/JCC.sh")
-
-    second, region = embedded_region(jcc_sh)
-    if len(our) > region:
-        print(f"SO {len(our)} > slot {region}", file=sys.stderr)
-        return 1
-    payload = our + b"\x00" * (region - len(our))
-    new_sh = bytearray(jcc_sh)
-    new_sh[second : second + region] = payload
-    print(f"embedded hybrid SO at {second} slot={region}")
-
+    jcc_sh = make_jcc_sh(inj, so)
     unsigned = root / "_pack_unsigned.apk"
     replace_in_apk(
-        orig,
+        Path(args.orig_apk),
         unsigned,
-        {
-            "assets/emu/libJCC.so": our,
-            "assets/JCC.sh": bytes(new_sh),
-        },
+        {"assets/JCC.sh": jcc_sh, "assets/emu/libJCC.so": so},
     )
 
-    # verify
-    with zipfile.ZipFile(unsigned, "r") as z:
-        assert len(z.read("assets/emu/libJCC.so")) == len(our)
-        assert len(z.read("assets/JCC.sh")) == len(new_sh)
-        print("unsigned verify OK")
-
+    ks = Path(args.ks or root / "signing/jcc-controller.release.keystore")
+    jar = Path(args.signer_jar or root / "tools/uber-apk-signer.jar")
     sign_out = root / "_pack_signed"
     if sign_out.exists():
         shutil.rmtree(sign_out)
     sign_out.mkdir(parents=True)
-    cmd = [
-        "java",
-        "-jar",
-        str(jar),
-        "-a",
-        str(unsigned),
-        "-o",
-        str(sign_out),
-        "--allowResign",
-        "--ks",
-        str(ks),
-        "--ksPass",
-        "android",
-        "--ksKeyPass",
-        "android",
-        "--ksAlias",
-        "androiddebugkey",
-    ]
-    subprocess.check_call(cmd)
+    subprocess.check_call(
+        [
+            "java",
+            "-jar",
+            str(jar),
+            "-a",
+            str(unsigned),
+            "-o",
+            str(sign_out),
+            "--allowResign",
+            "--ks",
+            str(ks),
+            "--ksPass",
+            "android",
+            "--ksKeyPass",
+            "android",
+            "--ksAlias",
+            "androiddebugkey",
+        ]
+    )
     signed = next(sign_out.glob("*Signed*.apk"), None)
     if not signed:
-        print("sign failed", file=sys.stderr)
         return 1
-    out_apk.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(signed, out_apk)
-
-    with zipfile.ZipFile(out_apk, "r") as z:
-        so_l = len(z.read("assets/emu/libJCC.so"))
-        sh_l = len(z.read("assets/JCC.sh"))
-        sh = z.read("assets/JCC.sh")
-        print(f"FINAL {out_apk} so={so_l} jccsh={sh_l} has_FULL={b'FULL-1.0.5' in sh}")
-        if so_l < 100000 or sh_l < 100000:
-            return 1
+    out = Path(args.out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(signed, out)
+    print(out)
     return 0
 
 

@@ -1,2 +1,2 @@
-﻿# build Controller 2.5.1 from original APK + new SO
-# requires: jarsigner, keytool, original APK, new libJCC.so
+pack:
+  python tools/pack_controller.py --so <lib.so> --inject <jcc_inject> --out dist/JCC-Controller.apk
