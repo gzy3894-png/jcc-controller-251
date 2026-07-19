@@ -67,3 +67,10 @@ P2: mapping feature xrefs to LDR imms for UnitData/board/hex/match player.
 - Field MATCH: hero + PlayerModel key paths
 - PRODUCT: v2.5.4 with patch - NEED USER TEST + log.txt if crash
 - STOP for user install/test
+
+## 2026-07-19T15:14:01.5808215+08:00
+### v2.5.5 safe-load
+- User: 资源损坏 after match load
+- NOP 20 DobbyHook sites (load/map/body/attack/loading)
+- KEEP 0x7d8d8 HandleRefreshBuyHero, 0x7d9ec UpdateNameAndMoney
+- Release v2.5.5
