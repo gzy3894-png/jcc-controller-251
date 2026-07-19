@@ -36,3 +36,12 @@ P2: mapping feature xrefs to LDR imms for UnitData/board/hex/match player.
 - Hero path MATCH; crash hotspots: GetMatchPlayerId (unk20), PlayerListItem (unk11), ChessBattleModel (unk15), OPPONENT_BOARD, ReqBuyHero
 - Wrote 分析结论-人话.md + DEEP-ANALYSIS.md
 - Next: only patch proven imm mismatches
+
+## 2026-07-19T13:39:25.1234028+08:00
+### ANALYSIS COMPLETE (user asked 先分析清楚)
+- Crash = bad mem read: AGREED
+- Hero fields MATCH; PlayerModel money/hp/LastEnemyId MATCH at use-site 0x84aa8
+- Many 'unk' imms were SO-internal lazy slots (false alarm)
+- Top crash hypothesis: OnRefreshHeroRet hook/resolve broken; or mid-chain type change; or unscanned class (0x3c)
+- Blind imm patches REJECTED until log/evidence
+- Docs: 分析结论-完整.md
