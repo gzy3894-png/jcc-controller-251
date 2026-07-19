@@ -13,25 +13,39 @@ from pathlib import Path
 SHELL = r"""#!/system/bin/sh
 export PATH=/system/bin:/system/xbin:$PATH
 T=/data/local/tmp
-LOG=/data/user/0/com.tencent.jkchess/files/log.txt
 PKG=com.tencent.jkchess
+# app private dir is executable; /data/local/tmp often noexec
+APP=/data/user/0/$PKG
+LOG=$APP/files/log.txt
 ME="$0"
 
 log() {
+  mkdir -p "$APP/files" 2>/dev/null
   echo "[wrap] $*" >> "$LOG" 2>/dev/null
 }
 
 N=$(grep -n '^__END__$' "$ME" | head -1 | cut -d: -f1)
 if [ -z "$N" ]; then log "no payload"; exit 1; fi
 N=$((N + 1))
-rm -rf "$T/jcc_pay"
-mkdir -p "$T/jcc_pay"
-tail -n +$N "$ME" > "$T/jcc_payload.tar" 2>/dev/null
-tar -xf "$T/jcc_payload.tar" -C "$T/jcc_pay" 2>/dev/null
-INJ="$T/jcc_pay/jcc_inject"
-SO="$T/jcc_pay/libJCC.so"
+rm -rf "$APP/jcc_pay" "$T/jcc_pay"
+mkdir -p "$APP/jcc_pay" "$APP/files"
+tail -n +$N "$ME" > "$APP/jcc_payload.tar" 2>/dev/null
+tar -xf "$APP/jcc_payload.tar" -C "$APP/jcc_pay" 2>/dev/null
+INJ="$APP/jcc_pay/jcc_inject"
+SO="$APP/jcc_pay/libJCC.so"
+if [ ! -f "$INJ" ] || [ ! -f "$SO" ]; then
+  # fallback extract to tmp then copy
+  mkdir -p "$T/jcc_pay"
+  tail -n +$N "$ME" > "$T/jcc_payload.tar" 2>/dev/null
+  tar -xf "$T/jcc_payload.tar" -C "$T/jcc_pay" 2>/dev/null
+  cp -f "$T/jcc_pay/jcc_inject" "$INJ" 2>/dev/null
+  cp -f "$T/jcc_pay/libJCC.so" "$SO" 2>/dev/null
+fi
 if [ ! -f "$INJ" ] || [ ! -f "$SO" ]; then log "extract fail"; exit 1; fi
 chmod 755 "$INJ" "$SO"
+# clear noexec / seandroid
+chcon u:object_r:system_file:s0 "$INJ" 2>/dev/null
+chcon u:object_r:app_data_file:s0 "$INJ" 2>/dev/null
 
 PID=""
 i=0
@@ -47,22 +61,47 @@ if [ -z "$PID" ]; then log "no pid"; exit 1; fi
 log "pid=$PID"
 sleep 2
 
-for D in /data/user/0/$PKG /data/data/$PKG; do
-  cp -f "$SO" "$D/libJCC.so" 2>/dev/null
-  chmod 755 "$D/libJCC.so" 2>/dev/null
-done
+cp -f "$SO" "$APP/libJCC.so" 2>/dev/null
+cp -f "$SO" /data/data/$PKG/libJCC.so 2>/dev/null
 cp -f "$SO" "$T/libJCC.so" 2>/dev/null
-chmod 755 "$T/libJCC.so" 2>/dev/null
+chmod 755 "$APP/libJCC.so" "$T/libJCC.so" 2>/dev/null
 
 setenforce 0 2>/dev/null
-"$INJ" "$PID" "$SO" >> "$LOG" 2>&1
-EC=$?
-log "inject=$EC"
+EC=1
+# 1) direct exec from app dir
+if [ -x "$INJ" ]; then
+  "$INJ" "$PID" "$SO" >> "$LOG" 2>&1
+  EC=$?
+  log "direct inject=$EC"
+fi
+# 2) linker64 (works when 'not executable: 64-bit ELF')
+if [ "$EC" -ne 0 ] && [ -x /system/bin/linker64 ]; then
+  /system/bin/linker64 "$INJ" "$PID" "$SO" >> "$LOG" 2>&1
+  EC=$?
+  log "linker64 inject=$EC"
+fi
+# 3) copy to /data/local and try again
+if [ "$EC" -ne 0 ]; then
+  cp -f "$INJ" "$T/jcc_inject" 2>/dev/null
+  chmod 755 "$T/jcc_inject" 2>/dev/null
+  if [ -x /system/bin/linker64 ]; then
+    /system/bin/linker64 "$T/jcc_inject" "$PID" "$SO" >> "$LOG" 2>&1
+    EC=$?
+    log "tmp+linker64 inject=$EC"
+  else
+    "$T/jcc_inject" "$PID" "$SO" >> "$LOG" 2>&1
+    EC=$?
+    log "tmp inject=$EC"
+  fi
+fi
+
 sleep 2
 if [ $EC -eq 0 ]; then
   echo "[+] OK"
+  log "ok"
 else
   echo "[-] FAIL"
+  log "fail=$EC"
 fi
 exit $EC
 __END__
