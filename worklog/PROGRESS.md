@@ -50,3 +50,10 @@ P2: mapping feature xrefs to LDR imms for UnitData/board/hex/match player.
 - Patched shop refresh hook target
 - APK: dist/JCC-Controller-2.5.4.apk
 - Release: https://github.com/gzy3894-png/jcc-controller-251/releases/tag/v2.5.4
+
+## 2026-07-19T14:23:37.9360939+08:00
+### FEASIBILITY >=80% DOCUMENTED
+- Overall ~82%: original SO path viable
+- Critical: hero MATCH, PlayerModel key MATCH, shop hook retargetable (2.5.4 done)
+- Residual risk ~18%: mid-chain types, unscanned UI classes, need log closeout
+- File: worklog/FEASIBILITY-80.md
