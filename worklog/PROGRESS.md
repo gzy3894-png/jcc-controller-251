@@ -45,3 +45,8 @@ P2: mapping feature xrefs to LDR imms for UnitData/board/hex/match player.
 - Top crash hypothesis: OnRefreshHeroRet hook/resolve broken; or mid-chain type change; or unscanned class (0x3c)
 - Blind imm patches REJECTED until log/evidence
 - Docs: 分析结论-完整.md
+
+## 2026-07-19T13:46:18.3556082+08:00 PRODUCT v2.5.4
+- Patched shop refresh hook target
+- APK: dist/JCC-Controller-2.5.4.apk
+- Release: https://github.com/gzy3894-png/jcc-controller-251/releases/tag/v2.5.4
