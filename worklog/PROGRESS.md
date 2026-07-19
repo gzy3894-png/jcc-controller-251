@@ -74,3 +74,21 @@ P2: mapping feature xrefs to LDR imms for UnitData/board/hex/match player.
 - NOP 20 DobbyHook sites (load/map/body/attack/loading)
 - KEEP 0x7d8d8 HandleRefreshBuyHero, 0x7d9ec UpdateNameAndMoney
 - Release v2.5.5
+
+## 2026-07-19T15:25:09.9805876+08:00
+### USER REJECT 2.5.5
+- 资源损坏 fixed approach broke 商店显示
+- Original SO path did not restore features; regression vs 2.5.2 cardpool
+- User requires 80% restore before test; stop premature releases
+### PLAN 2.6.0 hybrid (no load hooks)
+- Do NOT use original SO asset/map/body hooks
+- Protocol 31338 full for Controller UI
+- Read memory with season scan offsets + method invoke (GetMatchPlayerId, ReqBuyHero, SearchACGHero*)
+- No Dobby on LoadMap/LoadBody/AssetBundle
+- Rebuild inject SO in jcc-shell-apk, pack Controller when solid
+
+## 2026-07-19T15:31:44.5625653+08:00
+### v2.6.0 hybrid released
+- Abandoned original SO aggressive hooks (资源损坏 + 商店丢失)
+- Hybrid: season offsets + invoke GetMatchPlayerId/cardpool, NO asset hooks
+- User should only test when ready; this restores shop path reliability goal
