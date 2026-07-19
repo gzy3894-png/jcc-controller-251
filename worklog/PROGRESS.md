@@ -29,3 +29,10 @@
 User clarified: crash on click = data/layout wrong, not guesswork.
 P1 hero path MATCH does NOT mean all features safe.
 P2: mapping feature xrefs to LDR imms for UnitData/board/hex/match player.
+
+## 2026-07-19T13:32:38.0300788+08:00
+### DEEP ANALYSIS DONE (no claim full fix)
+- User right: crash = wrong data layout
+- Hero path MATCH; crash hotspots: GetMatchPlayerId (unk20), PlayerListItem (unk11), ChessBattleModel (unk15), OPPONENT_BOARD, ReqBuyHero
+- Wrote 分析结论-人话.md + DEEP-ANALYSIS.md
+- Next: only patch proven imm mismatches
